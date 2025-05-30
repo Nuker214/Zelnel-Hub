@@ -54,7 +54,7 @@ local function detectExecutor()
 end
 
 -- Main Hub Loader
-if game.PlaceId == 9431156611 then
+if game.PlaceId == 6961824067 then
     -- Loading notification
     game.StarterGui:SetCore("SendNotification", {
         Title = "|~| Zelnel Hub |~|",
