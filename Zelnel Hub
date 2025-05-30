@@ -62,8 +62,22 @@ if game.PlaceId == 9431156611 then
         Duration = 3
     })
 
-    -- Load OrionLib
-    local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/jensonhirst/Orion/main/source"))()
+    -- Load OrionLib with error handling
+    local OrionLib
+    local success, result = pcall(function()
+        return loadstring(game:HttpGet("https://raw.githubusercontent.com/jensonhirst/Orion/main/source"))()
+    end)
+
+    if success then
+        OrionLib = result
+    else
+        game.StarterGui:SetCore("SendNotification", {
+            Title = "|~| Zelnel Hub |~|",
+            Text = "Failed to load GUI library!",
+            Duration = 5
+        })
+        return
+    end
 
     -- Create Window
     local Window = OrionLib:MakeWindow({
