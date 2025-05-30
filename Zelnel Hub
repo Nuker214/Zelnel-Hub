@@ -1,0 +1,134 @@
+-- |~| Zelnel Hub Loader |~|
+
+-- Executor Detector Function
+local function detectExecutor()
+    local executor = "Unknown Executor"
+    if syn and syn.protect_gui then
+        executor = "Synapse X"
+    elseif KRNL_LOADED or is_krnl_closure then
+        executor = "Krnl"
+    elseif is_sirhurt_closure then
+        executor = "Sirhurt"
+    elseif secure_load then
+        executor = "Sentinel"
+    elseif fluxus then
+        executor = "Fluxus"
+    elseif SW and SW.ConsolePrint then
+        executor = "Script-Ware"
+    elseif pebc_execute then
+        executor = "ProtoSmasher"
+    elseif shadow_env then
+        executor = "Shadow"
+    elseif electron and electron.isElectron then
+        executor = "Electron"
+    elseif cheeseburger_loaded then
+        executor = "Cheeseburger"
+    elseif WR and WR.RunScript then
+        executor = "WeAreDevs"
+    elseif KOHLS_WARE then
+        executor = "Kohls"
+    elseif venus_exec then
+        executor = "Venus"
+    elseif R_EXEC then
+        executor = "R Executor"
+    elseif COCAINE_LOADED then
+        executor = "Cocaine"
+    elseif WM_LOADED then
+        executor = "Wally"
+    elseif wearedevs or WEAREDEVS_LOADED then
+        executor = "WeAreDevs"
+    elseif getgenv and getgenv()._G and getgenv()._G.Sandwich then
+        executor = "Sandwich"
+    elseif delta and delta.IsDelta then
+        executor = "Delta"
+    elseif arcus and arcus.isExecutor then
+        executor = "Arcus X"
+    elseif arceus and arceus.isExecutor then
+        executor = "Arceus X"
+    elseif hydrogen then
+        executor = "Hydrogen"
+    elseif pcall(function() return getsenv end) then
+        executor = "Executor with getsenv"
+    end
+    return executor
+end
+
+-- Main Hub Loader
+if game.PlaceId == 9431156611 then
+    -- Loading notification
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "|~| Zelnel Hub |~|",
+        Text = "Loading Zelnel Hub...",
+        Duration = 3
+    })
+
+    -- Load OrionLib
+    local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/jensonhirst/Orion/main/source"))()
+
+    -- Create Window
+    local Window = OrionLib:MakeWindow({
+        Name = "|~| Zelnel Hub |~|",
+        HidePremium = false,
+        SaveConfig = true,
+        ConfigFolder = "ZelnelHub"
+    })
+
+    -- Make window draggable
+    Window.MainFrame.Active = true
+    Window.MainFrame.Draggable = true
+
+    -- Welcome notification
+    OrionLib:MakeNotification({
+        Name = "|~| Zelnel Hub |~|",
+        Content = "Welcome To Zelnel Hub!",
+        Image = "rbxassetid://4483345998",
+        Time = 5
+    })
+
+    -- Detect executor and notify + print
+    local executorName = detectExecutor()
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "|~| Executor Detected |~|",
+        Text = "Running on: " .. executorName,
+        Duration = 5
+    })
+    print("[Zelnel Hub] >> Executor Detected: " .. executorName)
+
+    -- Settings Tab
+    local SettingsTab = Window:MakeTab({
+        Name = "|~| Settings |~|",
+        Icon = "rbxassetid://4483345998",
+        PremiumOnly = false
+    })
+
+    -- Color Buttons
+    local basicColors = {
+        {Name = "Red", Color = Color3.fromRGB(255, 0, 0)},
+        {Name = "Black", Color = Color3.fromRGB(0, 0, 0)},
+        {Name = "Blue", Color = Color3.fromRGB(0, 0, 255)},
+        {Name = "Green", Color = Color3.fromRGB(0, 255, 0)},
+        {Name = "Yellow", Color = Color3.fromRGB(255, 255, 0)},
+        {Name = "Purple", Color = Color3.fromRGB(128, 0, 128)},
+        {Name = "White", Color = Color3.fromRGB(255, 255, 255)},
+        {Name = "Orange", Color = Color3.fromRGB(255, 165, 0)},
+        {Name = "Pink", Color = Color3.fromRGB(255, 192, 203)},
+        {Name = "Gray", Color = Color3.fromRGB(128, 128, 128)}
+    }
+
+    for _, col in ipairs(basicColors) do
+        SettingsTab:AddButton({
+            Name = "Set GUI Color: " .. col.Name,
+            Callback = function()
+                Window.MainFrame.BackgroundColor3 = col.Color
+            end
+        })
+    end
+
+else
+    -- Wrong game notification
+    game.StarterGui:SetCore("SendNotification", {
+        Title = "|~| Zelnel Hub |~|",
+        Text = "This Hub only works in Fling Things and People.",
+        Duration = 5
+    })
+end
